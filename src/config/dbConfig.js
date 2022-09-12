@@ -5,6 +5,6 @@ export const dbConnection = () => {
     const connection = mongoose.connect(process.env.MONGO_URL);
     connection && console.log("MongoDB has been connected");
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
