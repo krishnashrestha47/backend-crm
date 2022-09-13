@@ -1,4 +1,5 @@
 import express from "express";
+import { PasswordHash } from "../helpers/bcryptHelper.js";
 import { insertUser } from "../models/user/User.model.js";
 
 const router = express.Router();
@@ -16,8 +17,9 @@ router.get("/", (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const data = req.body;
-    const result = await insertUser(data);
+    const hashPassword = PasswordHash(req.body.password);
+    req.body.password = hashPassword;
+    const result = await insertUser(req.body);
 
     result?._id
       ? res.json({
@@ -30,6 +32,10 @@ router.post("/", async (req, res, next) => {
           message: "Couldn't register the user",
         });
   } catch (error) {
+    error.status = 500;
+    if (error.message.includes("E11000 duplicate key error collection")) {
+      error.message = "Email already exists";
+    }
     next(error);
   }
 });

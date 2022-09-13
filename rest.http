@@ -7,6 +7,6 @@ Content-Type: application/json
     "company": "Dented Code",
     "address": "Rockdale",
     "phone": 1234567890,
-    "email": "krish_sth2005@yahoo",
+    "email": "krish_sth2005@yahoo.com",
     "password": "abc123"
 }
