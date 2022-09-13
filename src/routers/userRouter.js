@@ -1,6 +1,6 @@
 import express from "express";
-import { PasswordHash } from "../helpers/bcryptHelper.js";
-import { insertUser } from "../models/user/User.model.js";
+import { passwordCompare, PasswordHash } from "../helpers/bcryptHelper.js";
+import { getUser, insertUser } from "../models/user/User.model.js";
 
 const router = express.Router();
 
@@ -14,6 +14,8 @@ router.get("/", (req, res, next) => {
     next(error);
   }
 });
+
+//create a new user
 
 router.post("/", async (req, res, next) => {
   try {
@@ -36,6 +38,34 @@ router.post("/", async (req, res, next) => {
     if (error.message.includes("E11000 duplicate key error collection")) {
       error.message = "Email already exists";
     }
+    next(error);
+  }
+});
+
+//user login
+router.post("/login", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await getUser({ email });
+
+    if (user?._id) {
+      const comparePassword = passwordCompare(password, user.password);
+      if (comparePassword) {
+        user.password = undefined;
+        res.json({
+          status: "success",
+          message: "user login successful",
+          user,
+        });
+        return;
+      }
+    }
+    res.status(401).json({
+      status: "error",
+      message: "Invalid login credentials",
+    });
+  } catch (error) {
     next(error);
   }
 });

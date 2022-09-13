@@ -4,8 +4,12 @@ export const insertUser = (userObj) => {
   return UserSchema(userObj).save();
 };
 
-export const getSingUser = (_id) => {
+export const getSingleUser = (_id) => {
   return UserSchema.findById(_id);
+};
+
+export const getUser = (filter) => {
+  return UserSchema.findOne(filter);
 };
 
 //update user details

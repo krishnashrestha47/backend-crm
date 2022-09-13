@@ -1,4 +1,4 @@
-### 
+### create user
 POST http://localhost:8000/api/v1/user
 Content-Type: application/json
 
@@ -9,4 +9,13 @@ Content-Type: application/json
     "phone": 1234567890,
     "email": "krish_sth2005@yahoo.com",
     "password": "abc123"
+}
+
+### user login
+POST http://localhost:8000/api/v1/user/login
+Content-Type: application/json
+
+{
+    "email": "krish_sth2005@yahoo.com",
+    "password": "abc12sss"
 }
