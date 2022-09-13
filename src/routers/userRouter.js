@@ -1,5 +1,6 @@
 import express from "express";
 import { passwordCompare, PasswordHash } from "../helpers/bcryptHelper.js";
+import { createAccessJWT, createRefreshJWT } from "../helpers/jwtHelper.js";
 import { getUser, insertUser } from "../models/user/User.model.js";
 
 const router = express.Router();
@@ -52,11 +53,16 @@ router.post("/login", async (req, res, next) => {
     if (user?._id) {
       const comparePassword = passwordCompare(password, user.password);
       if (comparePassword) {
+        const accessJWT = await createAccessJWT(user.email);
+        const refreshJWT = await createRefreshJWT(user.email);
+
         user.password = undefined;
         res.json({
           status: "success",
           message: "user login successful",
           user,
+          accessJWT,
+          refreshJWT,
         });
         return;
       }

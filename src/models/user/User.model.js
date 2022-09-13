@@ -13,6 +13,6 @@ export const getUser = (filter) => {
 };
 
 //update user details
-export const updateUser = (_id, dataObj) => {
-  return UserSchema.findByIdAndUpdate(_id, dataObj, { new: true });
+export const updateUser = (filter, dataObj) => {
+  return UserSchema.findOneAndUpdate(filter, dataObj, { new: true });
 };

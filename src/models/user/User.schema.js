@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  refreshJWT: {
+    type: String,
+    default: "",
+  },
 });
 
 export default mongoose.model("User", UserSchema);
