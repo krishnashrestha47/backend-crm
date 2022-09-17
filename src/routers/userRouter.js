@@ -1,11 +1,12 @@
 import express from "express";
 import { passwordCompare, PasswordHash } from "../helpers/bcryptHelper.js";
 import { createAccessJWT, createRefreshJWT } from "../helpers/jwtHelper.js";
+import { userAuthorization } from "../middlewares/authMiddleware.js";
 import { getUser, insertUser } from "../models/user/User.model.js";
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", userAuthorization, (req, res, next) => {
   try {
     res.json({
       status: "success",
