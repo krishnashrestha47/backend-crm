@@ -15,3 +15,12 @@ export const createRefreshJWT = async (payload) => {
   await updateUser({ email: payload }, { refreshJWT });
   return refreshJWT;
 };
+
+export const verifyAccessJWT = (userJWT) => {
+  try {
+    const verifyJWT = jwt.verify(userJWT, process.env.JWT_ACCESS_SECRET);
+    return verifyJWT;
+  } catch (error) {
+    error.message;
+  }
+};

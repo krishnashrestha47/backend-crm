@@ -19,3 +19,7 @@ Content-Type: application/json
     "email": "krish_sth2005@yahoo.com",
     "password": "abc123"
 }
+
+### Get a user profile endpoint
+GET http://localhost:8000/api/v1/user/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoia3Jpc2hfc3RoMjAwNUB5YWhvby5jb20iLCJpYXQiOjE2NjM0MjAxMjQsImV4cCI6MTY2MzQyMTAyNH0.5BN6IS9_ttZkVYl78s7cPjkxE9OaPsTQu9AdS2jSoEk
