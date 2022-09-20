@@ -5,6 +5,14 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
+  associates: {
+    type: String,
+    default: "",
+  },
 });
 
 export default mongoose.model("Session", sessionSchema);
