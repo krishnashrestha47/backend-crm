@@ -1,10 +1,16 @@
 import jwt from "jsonwebtoken";
+import { insertSession } from "../models/session/SessionModel.js";
 import { updateUser } from "../models/user/User.model.js";
 
-export const createAccessJWT = (payload) => {
+export const createAccessJWT = async (payload) => {
   const accessJWT = jwt.sign({ payload }, process.env.JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
+  const obj = {
+    token: accessJWT,
+    type: "jwt",
+  };
+  await insertSession(obj);
   return accessJWT;
 };
 

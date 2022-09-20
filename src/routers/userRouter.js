@@ -8,9 +8,11 @@ const router = express.Router();
 
 router.get("/", userAuthorization, (req, res, next) => {
   try {
+    const userInfo = req.userInfo;
     res.json({
       status: "success",
       message: "user router got hit",
+      userInfo,
     });
   } catch (error) {
     next(error);
@@ -48,16 +50,19 @@ router.post("/", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
+    //query to get user by email
     const user = await getUser({ email });
 
     if (user?._id) {
+      //if user exist, compare password /check for authentication
       const comparePassword = passwordCompare(password, user.password);
       if (comparePassword) {
+        // create JWTs if matched
         const accessJWT = await createAccessJWT(user.email);
         const refreshJWT = await createRefreshJWT(user.email);
-
+        //send password as undefined if successful
         user.password = undefined;
+        user.refreshJWT = undefined;
         res.json({
           status: "success",
           message: "user login successful",
