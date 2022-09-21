@@ -35,11 +35,11 @@ export const userAuthorization = async (req, res, next) => {
         }
       }
     }
-    //else unauthorized
-    // res.status(401).json({
-    //   status: "error",
-    //   message: "Unauthorized!",
-    // });
+    // unauthorized
+    res.status(401).json({
+      status: "error",
+      message: "Unauthorized!",
+    });
   } catch (error) {
     next(error);
   }
