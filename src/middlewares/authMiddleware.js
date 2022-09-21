@@ -9,12 +9,12 @@ export const userAuthorization = async (req, res, next) => {
 
     if (authorization) {
       //verify if jwt is valid
-      const decoded = verifyAccessJWT(authorization);
+      const decoded = await verifyAccessJWT(authorization);
       console.log(decoded);
       if (decoded === "jwt expired") {
         return res.status(403).json({
           status: "error",
-          message: "jwt expired!",
+          message: "jwt is expired!",
         });
       }
       if (decoded?.payload) {
@@ -36,10 +36,10 @@ export const userAuthorization = async (req, res, next) => {
       }
     }
     //else unauthorized
-    res.status(401).json({
-      status: "error",
-      message: "Unauthorized!",
-    });
+    // res.status(401).json({
+    //   status: "error",
+    //   message: "Unauthorized!",
+    // });
   } catch (error) {
     next(error);
   }

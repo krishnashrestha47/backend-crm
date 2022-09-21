@@ -4,7 +4,7 @@ import { updateUser } from "../models/user/User.model.js";
 
 export const createAccessJWT = async (payload) => {
   const accessJWT = jwt.sign({ payload }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "1m",
   });
   const obj = {
     token: accessJWT,
@@ -27,6 +27,6 @@ export const verifyAccessJWT = (userJWT) => {
     const verifyJWT = jwt.verify(userJWT, process.env.JWT_ACCESS_SECRET);
     return verifyJWT;
   } catch (error) {
-    error.message;
+    return error.message;
   }
 };
