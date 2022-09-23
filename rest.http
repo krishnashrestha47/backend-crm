@@ -31,3 +31,13 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoia3Jpc2hfc3Ro
 ### Get refreshed token jwt
 GET http://localhost:8000/api/v1/tokens/
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoia3Jpc2hfc3RoMjAwNUB5YWhvby5jb20iLCJpYXQiOjE2NjM5MTMxMTgsImV4cCI6MTY2NjUwNTExOH0.zANCYifsXIAC-pJzp9e3L2BfNGCrYikO4booy7sX5MA
+
+
+### password reset endpoint
+
+POST http://localhost:8000/api/v1/user/reset-password
+Content-Type: application/json
+
+{
+    "email": "krish_sth2005@yahoo.com"
+}

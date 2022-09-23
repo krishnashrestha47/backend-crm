@@ -82,4 +82,12 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+//
+
+router.post("/reset-password", async (req, res, next) => {
+  const { email } = req.body;
+  const user = await getUser({ email });
+  res.json(user);
+});
+
 export default router;
