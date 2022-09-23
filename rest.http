@@ -35,7 +35,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoia3Jpc2hfc3Ro
 
 ### password reset endpoint
 
-POST http://localhost:8000/api/v1/user/reset-password
+POST http://localhost:8000/api/v1/user/otp-request
 Content-Type: application/json
 
 {

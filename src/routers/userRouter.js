@@ -1,7 +1,9 @@
 import express from "express";
 import { passwordCompare, PasswordHash } from "../helpers/bcryptHelper.js";
 import { createAccessJWT, createRefreshJWT } from "../helpers/jwtHelper.js";
+import { createOtp } from "../helpers/randomGeneratorHelper.js";
 import { userAuthorization } from "../middlewares/authMiddleware.js";
+import { insertSession } from "../models/session/SessionModel.js";
 import { getUser, insertUser } from "../models/user/User.model.js";
 
 const router = express.Router();
@@ -84,10 +86,30 @@ router.post("/login", async (req, res, next) => {
 
 //
 
-router.post("/reset-password", async (req, res, next) => {
+router.post("/otp-request", async (req, res, next) => {
   const { email } = req.body;
-  const user = await getUser({ email });
-  res.json(user);
+  if (email) {
+    //check if user exists
+    const user = await getUser({ email });
+    if (user?._id) {
+      //create otp and send email
+      const obj = {
+        token: createOtp(),
+        associate: email,
+        type: "updatePassword",
+      };
+
+      const result = await insertSession(obj);
+      if (result?._id) {
+        res.json({
+          status: "success",
+          message:
+            "If your email exists in our system, we will send you a link to reset your password, Please check your email, ",
+        });
+        //send the otp to user email
+      }
+    }
+  }
 });
 
 export default router;
