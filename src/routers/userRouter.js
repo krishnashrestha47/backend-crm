@@ -1,5 +1,6 @@
 import express from "express";
 import { passwordCompare, PasswordHash } from "../helpers/bcryptHelper.js";
+import { otpNotification } from "../helpers/emailHelper.js";
 import { createAccessJWT, createRefreshJWT } from "../helpers/jwtHelper.js";
 import { createOtp } from "../helpers/randomGeneratorHelper.js";
 import { userAuthorization } from "../middlewares/authMiddleware.js";
@@ -87,28 +88,41 @@ router.post("/login", async (req, res, next) => {
 //
 
 router.post("/otp-request", async (req, res, next) => {
-  const { email } = req.body;
-  if (email) {
-    //check if user exists
-    const user = await getUser({ email });
-    if (user?._id) {
-      //create otp and send email
-      const obj = {
-        token: createOtp(),
-        associate: email,
-        type: "updatePassword",
-      };
+  try {
+    const { email } = req.body;
+    if (email) {
+      //check if user exists
+      const user = await getUser({ email });
+      if (user?._id) {
+        //create otp and send email
+        const obj = {
+          token: createOtp(),
+          associate: email,
+          type: "updatePassword",
+        };
 
-      const result = await insertSession(obj);
-      if (result?._id) {
-        res.json({
-          status: "success",
-          message:
-            "If your email exists in our system, we will send you a link to reset your password, Please check your email, ",
-        });
-        //send the otp to user email
+        const result = await insertSession(obj);
+        if (result?._id) {
+          res.json({
+            status: "success",
+            message:
+              "If your email exists in our system, we will send you a link to reset your password, Please check your email, ",
+          });
+          //send the otp to user email
+          return otpNotification({
+            token: result.token,
+            email,
+          });
+        }
       }
     }
+    res.json({
+      status: "error",
+      message: "Invalid request",
+    });
+  } catch (error) {
+    error.status = 500;
+    next(error);
   }
 });
 

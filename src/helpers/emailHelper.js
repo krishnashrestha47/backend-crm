@@ -32,7 +32,7 @@ export const otpNotification = async (userInfo) => {
           here is the OTP as per your request ${userInfo.token}
           <br/>
           <br/>
-  kind regards,
+  kind regards,<br/>
   CRM ticketing team
           `, // html body
   };
