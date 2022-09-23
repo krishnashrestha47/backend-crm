@@ -24,8 +24,15 @@ export const createRefreshJWT = async (payload) => {
 
 export const verifyAccessJWT = (userJWT) => {
   try {
-    const verifyJWT = jwt.verify(userJWT, process.env.JWT_ACCESS_SECRET);
-    return verifyJWT;
+    return jwt.verify(userJWT, process.env.JWT_ACCESS_SECRET);
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const verifyRefreshJWT = (userJWT) => {
+  try {
+    return jwt.verify(userJWT, process.env.JWT_REFRESH_SECRET);
   } catch (error) {
     return error.message;
   }

@@ -22,4 +22,12 @@ Content-Type: application/json
 
 ### Get a user profile endpoint
 GET http://localhost:8000/api/v1/user/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoia3Jpc2hfc3RoMjAwNUB5YWhvby5jb20iLCJpYXQiOjE2NjM3Njc1NDAsImV4cCI6MTY2Mzc2NzYwMH0.It1abmnitnx60yXGTlX_BphevD-4qmQs32fyG8RynOM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoia3Jpc2hfc3RoMjAwNUB5YWhvby5jb20iLCJpYXQiOjE2NjM5MTEzMDYsImV4cCI6MTY2MzkxMTM2Nn0.U1KjvWYaQ5nwbkvlriiqdO1NHRK-OeNEjMOd-76V_cc
+
+
+
+### === Token router ===
+
+### Get refreshed token jwt
+GET http://localhost:8000/api/v1/tokens/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoia3Jpc2hfc3RoMjAwNUB5YWhvby5jb20iLCJpYXQiOjE2NjM5MTMxMTgsImV4cCI6MTY2NjUwNTExOH0.zANCYifsXIAC-pJzp9e3L2BfNGCrYikO4booy7sX5MA

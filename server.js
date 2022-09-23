@@ -24,8 +24,10 @@ app.get("/", (req, res) => {
 //routers
 import userRouter from "./src/routers/userRouter.js";
 import ticketRouter from "./src/routers/ticketRouter.js";
+import tokensRouter from "./src/routers/tokensRouter.js";
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/ticket", ticketRouter);
+app.use("/api/v1/tokens", tokensRouter);
 
 //global error handling
 app.use((error, req, res, next) => {
