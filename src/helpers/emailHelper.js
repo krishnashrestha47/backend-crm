@@ -36,6 +36,27 @@ export const otpNotification = async (userInfo) => {
   CRM ticketing team
           `, // html body
   };
+  emailProcessor(mailBody);
+};
+
+export const profileUpdateNotification = async (userInfo) => {
+  const mailBody = {
+    from: `" CRM Ticketing 💻 " ${process.env.EMAIL_USER}`, // sender address
+    to: userInfo.email, // list of receivers
+    subject: "Profile Update Notification", // Subject line
+    text: `Hi ${userInfo.name}, your profile has just been updated, If it wasn't you, please contact administration immediately`, // plain text body
+    html: `<p>Hi ${userInfo.name}</p>
+        <br/>
+        <br/>
+        Your profile has just been updated as per your request.
+        <br/>
+        <br/>
+        If it wasn't you, please contact administration immediately.
+        <br/>
+kind regards,
+CRM ticketing team
+        `, // html body
+  };
 
   emailProcessor(mailBody);
 };

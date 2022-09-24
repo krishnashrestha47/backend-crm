@@ -1,6 +1,9 @@
 import express from "express";
 import { passwordCompare, PasswordHash } from "../helpers/bcryptHelper.js";
-import { otpNotification } from "../helpers/emailHelper.js";
+import {
+  otpNotification,
+  profileUpdateNotification,
+} from "../helpers/emailHelper.js";
 import { createAccessJWT, createRefreshJWT } from "../helpers/jwtHelper.js";
 import { createOtp } from "../helpers/randomGeneratorHelper.js";
 import { userAuthorization } from "../middlewares/authMiddleware.js";
@@ -152,6 +155,10 @@ router.patch("/reset-password", async (req, res, next) => {
       const updatedUser = await updateUser({ email }, resetPassword);
       if (updatedUser?._id) {
         //send email notification to user after password update
+        profileUpdateNotification({
+          name: updatedUser.name,
+          email: updatedUser.email,
+        });
         return res.json({
           status: "success",
           message: "Your password has been updated",
@@ -162,7 +169,10 @@ router.patch("/reset-password", async (req, res, next) => {
       status: "error",
       message: "Invalid request, unable to update the password",
     });
-  } catch (error) {}
+  } catch (error) {
+    error.status = 500;
+    next(error);
+  }
 });
 
 export default router;
