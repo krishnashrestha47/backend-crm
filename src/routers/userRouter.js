@@ -141,8 +141,9 @@ router.patch("/reset-password", async (req, res, next) => {
     const { email, password, otp } = req.body;
 
     // get session info based on the otp and email and get the id
+    // delete the token when function is called, so that token doesn't store unnecessarily
 
-    const session = await getSession({
+    const session = await deleteSession({
       token: otp,
       associate: email,
     });
