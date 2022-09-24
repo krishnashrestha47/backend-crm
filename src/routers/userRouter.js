@@ -4,8 +4,12 @@ import { otpNotification } from "../helpers/emailHelper.js";
 import { createAccessJWT, createRefreshJWT } from "../helpers/jwtHelper.js";
 import { createOtp } from "../helpers/randomGeneratorHelper.js";
 import { userAuthorization } from "../middlewares/authMiddleware.js";
-import { insertSession } from "../models/session/SessionModel.js";
-import { getUser, insertUser } from "../models/user/User.model.js";
+import {
+  deleteSession,
+  getSession,
+  insertSession,
+} from "../models/session/SessionModel.js";
+import { getUser, insertUser, updateUser } from "../models/user/User.model.js";
 
 const router = express.Router();
 
@@ -85,7 +89,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-//
+// otp for  password reset
 
 router.post("/otp-request", async (req, res, next) => {
   try {
@@ -124,6 +128,39 @@ router.post("/otp-request", async (req, res, next) => {
     error.status = 500;
     next(error);
   }
+});
+
+// reset password with otp
+
+router.patch("/reset-password", async (req, res, next) => {
+  try {
+    const { email, password, otp } = req.body;
+
+    // get session info based on the otp and email and get the id
+
+    const session = await getSession({
+      token: otp,
+      associate: email,
+    });
+    console.log(session);
+    if (session?._id) {
+      //based on the email, update password in the database after encrypting
+      const resetPassword = {
+        password: PasswordHash(password),
+      };
+      const updatedUser = await updateUser({ email }, resetPassword);
+      if (updatedUser?._id) {
+        return res.json({
+          status: "success",
+          message: "Your password has been updated",
+        });
+      }
+    }
+    res.json({
+      status: "error",
+      message: "Invalid request, unable to update the password",
+    });
+  } catch (error) {}
 });
 
 export default router;
