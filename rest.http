@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
     "email": "krish_sth2005@yahoo.com",
-    "password": "abcdef"
+    "password": "Abc123"
 }
 
 ### Get a user profile endpoint
@@ -50,5 +50,5 @@ Content-Type: application/json
 {
     "otp": "042234",
     "email": "krish_sth2005@yahoo.com",
-    "password": "abcdef"
+    "password": "Abc123"
 }

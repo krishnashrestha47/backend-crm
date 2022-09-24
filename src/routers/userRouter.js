@@ -116,6 +116,7 @@ router.post("/otp-request", async (req, res, next) => {
           return otpNotification({
             token: result.token,
             email,
+            name: user.name,
           });
         }
       }
@@ -150,6 +151,7 @@ router.patch("/reset-password", async (req, res, next) => {
       };
       const updatedUser = await updateUser({ email }, resetPassword);
       if (updatedUser?._id) {
+        //send email notification to user after password update
         return res.json({
           status: "success",
           message: "Your password has been updated",

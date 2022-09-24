@@ -25,8 +25,8 @@ export const otpNotification = async (userInfo) => {
     from: `" CRM Ticketing 💻 " ${process.env.EMAIL_USER}`, // sender address
     to: userInfo.email, // list of receivers
     subject: "OTP request notification", // Subject line
-    text: `Hi there, here is the OTP as per your request ${userInfo.token}, If it wasn't you, please contact administration immediately`, // plain text body
-    html: `<p>Hi there,</p>
+    text: `Hi ${userInfo.name}, here is the OTP as per your request ${userInfo.token}, If it wasn't you, please contact administration immediately`, // plain text body
+    html: `<p>Hi ${userInfo.name},</p>
           <br/>
           <br/>
           here is the OTP as per your request ${userInfo.token}
